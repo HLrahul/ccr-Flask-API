@@ -1,5 +1,4 @@
 # from crypt import methods
-from operator import imod
 from flask import request, jsonify, make_response
 from Application import app
 from Application.models import User
@@ -18,3 +17,11 @@ def listUsers():
         usersList.append(user)
 
     return jsonify(usersList), 200
+
+@app.route('/signout')
+def signout():
+    return User().signout()
+
+@app.route('/deleteAccount', methods=['DELETE'])
+def deleteAccount():
+    return User().deleteAccount()
