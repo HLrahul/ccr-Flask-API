@@ -16,7 +16,7 @@ class User():
             "password": credentials["password"]
         }
 
-        # user['password'] = pbkdf2_sha256.encrypt(user['password'])
+        user['password'] = pbkdf2_sha256.encrypt(user['password'])
 
         if db.users.find_one({ "email": user['email'] }):
             return jsonify({ "msg": "User already exists!" }), 400

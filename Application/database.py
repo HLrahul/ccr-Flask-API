@@ -1,6 +1,5 @@
 from Application import app
 from Application.constants import username, password
-from flask_mongoengine import MongoEngine
 import pymongo
 
 
