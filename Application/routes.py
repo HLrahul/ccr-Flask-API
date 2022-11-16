@@ -1,16 +1,45 @@
 # from crypt import methods
-from flask import request, jsonify, make_response,  render_template
+from flask import request, jsonify, render_template, session, redirect
+from functools import wraps
 from Application import app
 from Application.models import User
 from Application.database import db
 
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect('/login')
+
+    return wrap
+
 @app.route('/')
 def home():
-    return render_template('Header.html')
+    return render_template('homepage.html')
 
-@app.route('/signup', methods=['POST'])
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/signup', methods=['GET','POST'])
 def CreateUser():
-    return User().signup()
+    if request.method == 'POST':
+        res = User().signup()
+        return render_template('dashboard.html', msg = res)
+
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        res = User().login()
+        return render_template('dashboard.html', msg = res)
+
+    return render_template('login.html')
 
 @app.route('/listUsers', methods=['GET'])
 def listUsers():
@@ -20,7 +49,7 @@ def listUsers():
     for user in collection.find({}):
         usersList.append(user)
 
-    return jsonify(usersList), 200
+    return render_template('listusers.html', res = usersList)
 
 @app.route('/signout')
 def signout():

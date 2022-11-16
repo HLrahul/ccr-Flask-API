@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <div class="dash-board">
+        <h1>WELCOME TO YOUR DASHBOARD!!!</h1>
+        <h4>You are currently logged In :)</h4>
+        <section class="dashboard-content">
+            <h3>Your Queries</h3>
+
+            <p>
+                <strong>ID:</strong> {{ session['user']['_id'] }}<br>
+                <strong>ID:</strong> {{ session['user']['name'] }}<br>
+                <strong>ID:</strong> {{ session['user']['email'] }}<br>
+            </p>
+
+            <a href="{{ url_for('signout') }}">Sign Out</a>
+        </section>
+    </div>
+    
+{% endblock %}

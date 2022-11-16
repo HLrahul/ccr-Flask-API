@@ -1,0 +1,199 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+
+
+
+/* ScrollBar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: grey
+}
+  
+
+
+
+
+/* Common for all */
+*{
+    font-family: 'Open Sans', 'Roboto', 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+
+/* Nav-Bar */
+.nav-wrapper{
+    background: black;
+    color: white;
+    top: 0;
+    position: sticky;
+}
+
+.nav-bar{
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-text{
+    margin-left: 10px;
+    margin-right: auto;
+    background-image: url(../assets/boat.jpg);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    background-position: center;
+}
+
+.ul-list{
+    list-style-type: none;
+    display: flex;
+}
+.ul-list li{
+    padding: 0px 10px;
+}
+.ul-list li a{
+    color: white;
+    text-decoration: none;
+}
+.ul-list li a:hover{
+    color: rgba(254,104,113,255);
+}
+
+
+
+
+
+/* HomePage */
+.home-body{
+    background: black;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page-title{
+    background-image: url(../assets/sunset.jpg);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    font-size: 125px;
+    font-weight: 900;
+}
+
+
+
+
+
+/* Signup */
+.sign-up{
+    background: black;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sign-up-title{
+    margin-top: -50px;
+    margin-bottom: 25px;
+    background-image: url(../assets/boat.jpg);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    background-position: center;
+}
+
+.form-title{
+    background-image: url(../assets/boat.jpg);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    background-position: center;
+    margin-bottom: 20px;
+}
+
+.sign-up form{
+    display: flex;
+    flex-direction: column;
+}
+.sign-up form input{
+    margin-bottom: 10px;
+}
+.sign-up form button{
+    margin-top: 50px;
+}
+
+
+
+
+/* Login */
+.login-div{
+    background: black;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-div form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form form input{
+    margin-bottom: 10px;
+}
+
+.login-div form button{
+    margin-top: 50px;
+}
+
+/* Dashboard */
+.dash-board{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+/* Footer */
+.footer{
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: black;
+}

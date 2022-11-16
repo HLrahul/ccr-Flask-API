@@ -1,7 +1,7 @@
 import collections
 import email
 import json
-from flask import request, jsonify, session
+from flask import request, jsonify, session, redirect
 from Application.database import db
 from passlib.hash import pbkdf2_sha256
 import uuid
@@ -13,36 +13,50 @@ class User():
         session['logged_in'] = True
         session['user'] = user
 
-        msg = "Successfully created a Session!"
-        return jsonify(msg, user), 200
+        return "Session created"
 
     def signup(self):
-        credentials = request.json
         
         user = {
             "_id": uuid.uuid4().hex,
-            "name": credentials["name"],
-            "email": credentials["email"],
-            "password": credentials["password"]
+            "name": request.form.get('name'),
+            "email": request.form.get('email'),
+            "password": request.form.get('password'),
         }
+        re_pass = request.form.get('retyped-password')
 
-        user['password'] = pbkdf2_sha256.encrypt(user['password'])
+        if user['password'] == re_pass:
 
-        collection = db['users']
-        if collection.find_one({ "email": user['email'] }):
-            return jsonify({ "msg": "User already exists!" }), 400
-        if collection.find_one({ "name": user['name'] }):
-            return "UserName already taken, try different name!", 400
-        if collection.insert_one(user):
+            user['password'] = pbkdf2_sha256.encrypt(user['password'])
+
+            collection = db['users']
+            if collection.find_one({ "email": user['email'] }):
+                return "User already exists!"
+            if collection.find_one({ "name": user['name'] }):
+                return "UserName already taken, try different name!"
+            if collection.insert_one(user):
+                return "Successfully Registered! Login to go to Dashboard!"
+
+            return "Error : Something went wrong"
+
+        else:
+            return "Password mismatch!"
+
+
+    def login(self):
+        user = db.users.find_one({
+            "email": request.form.get('email')
+        })
+
+        if user:
             return self.start_session(user)
-            # return jsonify({ "msg": "User added successfully!" }), 200
-
-        return jsonify({ "Error": "Something went wrong" }), 400
+        
+        return jsonify({ "error" : "Invalid login Credentials!" })
 
     def signout(self):
         session.clear()
 
-        return "U have successfully signed out!", 200
+        return redirect('/signup')
 
     def deleteAccount(self):
         credentials = request.json

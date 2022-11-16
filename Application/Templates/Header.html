@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Care Registry</title>
-</head>
-<body>
-    <h1>Header</h1>
+{% block header %}
 
-    {% include 'Footer.html' %}
-</body>
-</html>
+    <div class="nav-wrapper">
+        <div class="nav-bar">
+            <div class="title-text"> <h1>CCR</h1> </div>
+            <ul class="ul-list">
+                <li> <a href="#">Top Queries</a> </li>
+                <li> <a href="{{ url_for('listUsers') }}">List Users</a> </li>
+                <li> <a href="{{ url_for('login') }}">Sign in</a> </li>
+                <li> <a href="{{ url_for('CreateUser') }}">Sign up</a> </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
