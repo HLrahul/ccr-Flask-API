@@ -29,7 +29,10 @@ def dashboard():
 def CreateUser():
     if request.method == 'POST':
         res = User().signup()
-        return render_template('dashboard.html', msg = res)
+        if res == "Successfully Registered! Login to go to Dashboard!":
+            return render_template('signup.html', msg = res)
+        else:
+            return render_template('signup.html', msg = res)
 
     return render_template('signup.html')
 
@@ -37,7 +40,14 @@ def CreateUser():
 def login():
     if request.method == 'POST':
         res = User().login()
-        return render_template('dashboard.html', msg = res)
+        if res != "User Doesn't Exist":
+            logger = db['users'].find_one({ "email": request.form.get('email') })
+            if logger['role'] == 'agent':
+                return render_template('admindashboard.html', msg = res)
+            else:
+                return render_template('dashboard.html', msg = res)
+        else:
+            return render_template('login.html', msg = res)
 
     return render_template('login.html')
 

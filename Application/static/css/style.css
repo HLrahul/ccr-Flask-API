@@ -148,7 +148,9 @@
     margin-top: 50px;
 }
 
-
+#select-options{
+    margin-bottom: 10px;
+}
 
 
 /* Login */
@@ -177,12 +179,27 @@
 }
 
 /* Dashboard */
+.message{
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.message h4{
+    margin-top: 10px;
+}
+
 .dash-board{
     min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
 
 
 

@@ -1,19 +1,19 @@
 import collections
 import email
 import json
-from flask import request, jsonify, session, redirect
+from flask import request, jsonify, session, redirect, render_template
 from Application.database import db
 from passlib.hash import pbkdf2_sha256
 import uuid
 
 class User():
 
-    def start_session(self, user):
-        del user['password']
+    def start_session(self, userCreds):
+        del userCreds['password']
         session['logged_in'] = True
-        session['user'] = user
+        session['user'] = userCreds
 
-        return "Session created"
+        return "Session Created!"
 
     def signup(self):
         
@@ -21,6 +21,7 @@ class User():
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
             "email": request.form.get('email'),
+            "role": request.form.get('role'),
             "password": request.form.get('password'),
         }
         re_pass = request.form.get('retyped-password')
@@ -44,19 +45,20 @@ class User():
 
 
     def login(self):
-        user = db.users.find_one({
-            "email": request.form.get('email')
-        })
+        mailentered = request.form.get('email')
 
-        if user:
-            return self.start_session(user)
+        user = db['users'].find_one({ "email": mailentered })
+
+        if user != None:
+            userCreds = db['users'].find_one({ "email" : user['email'] })
+            return self.start_session(userCreds)
         
-        return jsonify({ "error" : "Invalid login Credentials!" })
+        return "User Doesn't Exist"
 
     def signout(self):
         session.clear()
 
-        return redirect('/signup')
+        return redirect('/login')
 
     def deleteAccount(self):
         credentials = request.json
