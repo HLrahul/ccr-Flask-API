@@ -19,14 +19,18 @@
 {% block content %}
 
     <div class="message">
-        {{ msg }}
         <h4>You are currently logged In :)</h4>
+        {{ msg }}
     </div>
 
     <div class="dash-board">
         <h1>WELCOME TO <b>ADMIN</b> DASHBOARD!!!</h1>
         <section class="dashboard-content">
-            <h3>Your Queries</h3>
+            
+            <h3>Queries</h3>
+
+            {{ Queries }}
+
         </section>
     </div>
 

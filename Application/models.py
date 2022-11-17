@@ -69,3 +69,22 @@ class User():
             return "The Account has been deleted successfully!", 200
 
         return "Account not found!", 400
+
+    def addQuery(self):
+        collection = db['query_table']
+
+        query = {
+            "email" : request.form.get('email'),
+            "query_title" : request.form.get('query_title'),
+            "query_body" : request.form.get('query_body')
+        }
+
+        is_raised = collection.find_one({ "query_title" : query['query_title'] })
+        if is_raised == None:
+            if collection.insert_one(query):
+                return "Successfully Raised your Query :)"
+            else:
+                return "Unable to raise your Query!"
+
+        else:
+            return "Query Already raised!"

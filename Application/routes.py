@@ -43,7 +43,13 @@ def login():
         if res != "User Doesn't Exist":
             logger = db['users'].find_one({ "email": request.form.get('email') })
             if logger['role'] == 'agent':
-                return render_template('admindashboard.html', msg = res)
+
+                collection = db['query_table']
+                queries = []
+                for query in collection.find({}):
+                    queries.append(query)
+                    
+                return render_template('admindashboard.html', msg = res, Queries = queries)
             else:
                 return render_template('dashboard.html', msg = res)
         else:
@@ -68,3 +74,8 @@ def signout():
 @app.route('/deleteAccount', methods=['DELETE'])
 def deleteAccount():
     return User().deleteAccount()
+
+@app.route('/add_query', methods=['POST'])
+def addQuery():
+    res = User().addQuery()
+    return render_template('dashboard.html', msg = res)

@@ -192,14 +192,29 @@
 }
 
 .dash-board{
+    color: white;
+    background: black;
     min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
+.dash-board form{
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-board form input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dash-board form button{
+    margin-top: 20px;
+}
 
 
 
