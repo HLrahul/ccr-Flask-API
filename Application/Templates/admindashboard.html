@@ -28,8 +28,30 @@
         <section class="dashboard-content">
             
             <h3>Queries</h3>
+            <table>
+            <thead>
+                <td>USER EMAIL</td>
+                <td>QUERY TITLE</td>
+                <td>QUERY BODY</td>
+                <td>ANSWER</td>
+                <td>ACTION</td>
+            </thead>
+            
+            {% for query in queries %}
 
-            {{ Queries }}
+            <tr>
+                <td>{{ query['email'] }}</td>
+                <td>{{ query['query_title'] }}</td>
+                <td>{{ query['query_body'] }}</td>
+                <form action="{{ url_for('answerQuery', email=query['email'] , query_title=query['query_title']) }}" method="POST">
+                <td><input name="answer" id="answer" type="text" /></td>
+                <td><button type="submit">Answer</button></td>
+
+                </form>
+            </tr>
+
+            {% endfor %}
+            </table>
 
         </section>
     </div>

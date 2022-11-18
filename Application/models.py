@@ -76,7 +76,9 @@ class User():
         query = {
             "email" : request.form.get('email'),
             "query_title" : request.form.get('query_title'),
-            "query_body" : request.form.get('query_body')
+            "query_body" : request.form.get('query_body'),
+            "answer" : "",
+            "is_answered" : False
         }
 
         is_raised = collection.find_one({ "query_title" : query['query_title'] })

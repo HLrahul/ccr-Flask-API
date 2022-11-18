@@ -1,5 +1,5 @@
 # from crypt import methods
-from flask import request, jsonify, render_template, session, redirect
+from flask import request, jsonify, render_template, session, redirect, url_for
 from functools import wraps
 from Application import app
 from Application.models import User
@@ -20,10 +20,20 @@ def login_required(f):
 def home():
     return render_template('homepage.html')
 
-@app.route('/dashboard')
+@app.route('/dashboard/<userid>')
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def dashboard(userid):
+    logger = db['users'].find_one({ "email": userid })
+    if logger['role'] == 'agent':
+
+        collection = db['query_table']
+        queries = []
+        for query in collection.find({}):
+            queries.append(query)
+            
+        return render_template('admindashboard.html', queries = queries)
+    else:
+        return render_template('dashboard.html')
 
 @app.route('/signup', methods=['GET','POST'])
 def CreateUser():
@@ -49,7 +59,7 @@ def login():
                 for query in collection.find({}):
                     queries.append(query)
                     
-                return render_template('admindashboard.html', msg = res, Queries = queries)
+                return render_template('admindashboard.html', msg = res, queries = queries)
             else:
                 return render_template('dashboard.html', msg = res)
         else:
@@ -58,6 +68,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/listUsers', methods=['GET'])
+@login_required
 def listUsers():
     usersList = []
     
@@ -79,3 +90,35 @@ def deleteAccount():
 def addQuery():
     res = User().addQuery()
     return render_template('dashboard.html', msg = res)
+
+
+@app.route('/answer_query/<email>/<query_title>', methods=['GET', 'POST'])
+def answerQuery(email, query_title):
+    if request.method == 'POST':
+        answer = request.form.get('answer')
+        collection = db['query_table']
+
+        queryRecord = collection.find_one({ "email" : email, "query_title" : query_title })
+        is_ans = queryRecord['is_answered']
+
+        ans = queryRecord['answer']
+        if not is_ans:
+            collection.find_one_and_update({ "email" : email, "query_title" : query_title } ,{ "$set" : { "email" : email, "query_title" : query_title, "answer" : answer, "is_answered" : True }}, upsert=True)
+            msg = "Your answer has been saved :)"
+        else:
+            msg = "It has already been answered :("
+            
+        return render_template('answered.html', msg=msg, answer=ans)
+
+    return '<h1>It has not updated!</h1>'
+
+
+@app.route('/topQueries')
+def topQueries():
+    collection = db['query_table']
+
+    queries = []
+    for query in collection.find({}):
+        queries.append(query)
+
+    return render_template('topqueries.html', queries=queries)

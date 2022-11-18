@@ -216,6 +216,27 @@
     margin-top: 20px;
 }
 
+.dashboard-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+table{
+    table-layout: fixed;
+    width: 80%;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: gray;
+}
+  
+tbody tr:nth-child(even) {
+    background-color: black;
+}
+
 
 
 
@@ -228,4 +249,51 @@
     align-items: center;
     color: white;
     background: black;
+}
+
+
+
+
+
+/* Answered Block */
+.answered-block{
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.answered-block h1{
+    background-image: url(../assets/sunset.jpg);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    font-size: 100px;
+    font-weight: 900;
+}
+
+
+
+/* top-queries-section */
+.top-queries-section{
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.queries-box{
+    background: black;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
