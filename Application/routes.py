@@ -122,3 +122,15 @@ def topQueries():
         queries.append(query)
 
     return render_template('topqueries.html', queries=queries)
+
+
+@app.route('/myqueries/<id>')
+@login_required
+def myqueries(id):
+    collection = db['query_table']
+
+    myqueries = []
+    for query in collection.find({ "email" : id }):
+        myqueries.append(query)
+
+    return render_template('myqueries.html', myqueries=myqueries)

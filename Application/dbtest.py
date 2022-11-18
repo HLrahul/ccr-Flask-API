@@ -9,5 +9,9 @@ DB_URI = "mongodb+srv://{}:{}@customercareregistrydb.4ubajvz.mongodb.net/?retryW
 client = pymongo.MongoClient(DB_URI)
 db = client.users
 
-logger = db['users'].find_one({ "email" : "rahuls10org@gmail.com" })
-print(logger['role'])
+
+logger = []
+for query in db['query_table'].find({ "email" : "hari@gmail.com" }):
+    logger.append(query)
+
+print(logger)
